@@ -4,16 +4,31 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 const HomeScreen = ({ navigation, route }) => {
   const role = route?.params?.role || 'User';
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
+  };
+
+  const greeting = `${getGreeting()}, ${role}.`;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Hella$avings</Text>
-      <Text style={styles.subtitle}>Logged in as: {role}</Text>
+      <Text style={styles.title}>{greeting}</Text>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('PlanOverview', { role })}
+        onPress={() => navigation.navigate('ExpenseManager', { role })}
       >
-        <Text style={styles.buttonText}>View My Plan</Text>
+        <Text style={styles.buttonText}>Expense Manager</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('PlanDocuments')}
+      >
+        <Text style={styles.buttonText}>View Plan Documents</Text>
       </TouchableOpacity>
 
       <TouchableOpacity

@@ -5,7 +5,7 @@ const LoadingScreen = ({ navigation }) => {
   useEffect(() => {
     // Simulate loading delay (e.g. checking token)
     const timer = setTimeout(() => {
-      navigation.replace('Login'); 
+      navigation.replace('Welcome');
     }, 2000); // 2-second delay
 
     return () => clearTimeout(timer);
@@ -13,7 +13,7 @@ const LoadingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>Abes Master piece</Text>
+      <Text style={styles.logo}>App Name Placeholder</Text>
       <Text style={styles.subtitle}>Empowering the self-employed</Text>
       <ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 30 }} />
     </View>

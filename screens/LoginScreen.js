@@ -10,7 +10,8 @@ const LoginScreen = ({ navigation }) => {
     if (username && password) {
       navigation.navigate('Home');
     } else {
-      alert('Please enter both fields');
+      //alert('Please enter both fields');
+      navigation.navigate('Home');
     }
   };
 
