@@ -33,7 +33,12 @@ const HomeScreen = ({ navigation, route }) => {
 
       <TouchableOpacity
         style={[styles.button, styles.logoutButton]}
-        onPress={() => navigation.replace('Login')}
+        onPress={() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Welcome' }],
+          });
+        }}
       >
         <Text style={styles.buttonText}>Log Out</Text>
       </TouchableOpacity>

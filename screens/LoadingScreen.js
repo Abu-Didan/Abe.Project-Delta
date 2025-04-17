@@ -13,7 +13,7 @@ const LoadingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>App Name Placeholder</Text>
+      <Text style={styles.logo}>Hella$avings</Text>
       <Text style={styles.subtitle}>Empowering the self-employed</Text>
       <ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 30 }} />
     </View>

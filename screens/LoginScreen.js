@@ -8,16 +8,16 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = () => {
     if (username && password) {
-      navigation.navigate('Home');
+      navigation.reset({index: 0, routes: [{name: 'Home', params: { role }}]})
     } else {
       //alert('Please enter both fields');
-      navigation.navigate('Home');
+      navigation.reset({index: 0, routes: [{name: 'Home', params: { role }}]})
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Login as {role}</Text>
+      <Text style={[styles.logo, { textAlign: 'center'}, {marginBottom: 10}]}>Login as {role}</Text>
 
       <View style={styles.roleToggle}>
         <TouchableOpacity onPress={() => setRole('Employee')}>
@@ -53,6 +53,7 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  logo: { fontSize: 32, fontWeight: 'bold', color: '#007AFF' },
   container: { flex: 1, justifyContent: 'center', padding: 20 },
   header: { fontSize: 24, textAlign: 'center', marginBottom: 30 },
   roleToggle: { flexDirection: 'row', justifyContent: 'center', marginBottom: 20 },
