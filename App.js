@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LoadingScreen from './screens/LoadingScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ExpenseManagerScreen from './screens/ExpenseManagerScreen';
@@ -14,16 +13,13 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Loading">
+      <Stack.Navigator initialRouteName="Loading"
+        screenOptions = {{headerShown: false}}
+      >  
         <Stack.Screen
           name="Loading"
           component={LoadingScreen}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='Welcome'
-          component = {WelcomeScreen}
-          options={{ title: 'Welcome'}}
         />
         <Stack.Screen
           name="Login"
