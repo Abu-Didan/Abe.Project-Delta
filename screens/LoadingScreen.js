@@ -5,7 +5,7 @@ const LoadingScreen = ({ navigation }) => {
   useEffect(() => {
     // Simulate loading delay (e.g. checking token)
     const timer = setTimeout(() => {
-      navigation.replace('Welcome');
+      navigation.replace('Login');
     }, 2000); // 2-second delay
 
     return () => clearTimeout(timer);

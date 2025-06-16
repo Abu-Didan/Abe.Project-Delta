@@ -52,7 +52,7 @@ const PlanOverviewScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: 'white' },
+  container: { flex: 1, padding: 20, backgroundColor: 'white', justifyContent: 'center' },
   header: { fontSize: 26, fontWeight: 'bold', textAlign: 'center', marginBottom: 30 },
   card: {
     backgroundColor: '#f2f2f2',
