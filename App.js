@@ -5,14 +5,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoadingScreen from './screens/LoadingScreen';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
-import PlanOverviewScreen from './screens/PlanOverviewScreen';
+import ExpenseManagerScreen from './screens/ExpenseManagerScreen';
+import PlanDocumentsScreen from './screens/PlanDocumentsScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Loading">
+      <Stack.Navigator initialRouteName="Loading"
+        screenOptions = {{headerShown: false}}
+      >  
         <Stack.Screen
           name="Loading"
           component={LoadingScreen}
@@ -26,12 +29,17 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Dashboard' }}
+          options={{ title: 'Plan Manager' }}
         />
         <Stack.Screen
-          name="PlanOverview"
-          component={PlanOverviewScreen}
-          options={{ title: 'Plan Overview' }}
+          name="ExpenseManager"
+          component={ExpenseManagerScreen}
+          options={{ title: 'Expense Manager' }}
+        />
+        <Stack.Screen
+          name="PlanDocuments"
+          component={PlanDocumentsScreen}
+          options={{ title: 'Plan Documents' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

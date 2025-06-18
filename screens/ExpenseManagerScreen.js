@@ -11,7 +11,7 @@ const PlanOverviewScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Your Plan Overview</Text>
+      <Text style={styles.header}>Current {planYear} Report</Text>
 
       <View style={styles.card}>
         <Text style={styles.label}>Role:</Text>
@@ -35,7 +35,14 @@ const PlanOverviewScreen = ({ route, navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: '#ccc' }]}
+        style={styles.button}
+        onPress={() => navigation.navigate('EnteredExpenses')}
+      >
+        <Text style={styles.buttonText}>View Entered Expenses</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: '#FF3B30' }]}
         onPress={() => navigation.goBack()}
       >
         <Text style={styles.buttonText}>Back to Home</Text>
@@ -45,7 +52,7 @@ const PlanOverviewScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: 'white' },
+  container: { flex: 1, padding: 20, backgroundColor: 'white', justifyContent: 'center' },
   header: { fontSize: 26, fontWeight: 'bold', textAlign: 'center', marginBottom: 30 },
   card: {
     backgroundColor: '#f2f2f2',
