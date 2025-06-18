@@ -7,52 +7,58 @@ import {
   ScrollView,
 } from 'react-native';
 import { Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+import Navbar from '../components/Navbar';
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <ScrollView contentContainerStyle={{
-      flexGrow: 1,
-      justifyContent: 'center',
-      padding: 16,
-    }}
-      style={{ backgroundColor: '#0f0f0f' }}
-    >
-      <Text style={styles.sectionTitle}>Medical Expenses</Text>
-      <View style={styles.cardRow}>
-        <FeatureCard
-          icon={<MaterialIcons name="add" size={32} color="#0f0f0f" />}
-          title="Add Expense"
-          subtitle="Record a new medical expense"
-          onPress={() => navigation.navigate('AddExpense')}
-        />
-        <FeatureCard
-          icon={<Ionicons name="list" size={32} color="#0f0f0f" />}
-          title="All Expenses"
-          subtitle="View and manage medical expenses"
-        />
-      </View>
+    <View style={{ flex: 1, justifyContent: 'space-between' }}>
+      <ScrollView contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: 'center',
+        padding: 16,
+      }}
+        style={{ backgroundColor: '#0f0f0f' }}
+      >
+        <Text style={styles.sectionTitle}>Medical Expenses</Text>
+        <View style={styles.cardRow}>
+          <FeatureCard
+            icon={<MaterialIcons name="add" size={32} color="#0f0f0f" />}
+            title="Add Expense"
+            subtitle="Record a new medical expense"
+            onPress={() => navigation.navigate('AddExpense')}
+          />
+          <FeatureCard
+            icon={<Ionicons name="list" size={32} color="#0f0f0f" />}
+            title="All Expenses"
+            subtitle="View and manage medical expenses"
+          />
+        </View>
 
-      <Text style={styles.sectionTitle}>Plan Management</Text>
-      <View style={styles.cardRow}>
-        <FeatureCard
-          icon={<FontAwesome5 name="briefcase" size={28} color="#0f0f0f" />}
-          title="Log Hours"
-          subtitle="Record your work hours"
-        />
-        <FeatureCard
-          icon={<Ionicons name="document-text" size={30} color="#0f0f0f" />}
-          title="Plan Documents"
-          subtitle="View your REAP 105 plan documents"
-        />
-        <FeatureCard
-          icon={<Ionicons name="bar-chart" size={30} color="0f0f0f" />}
-          title="Expense Analytics"
-          subtitle="View detailed expense reports"
-        />
-      </View>
-    </ScrollView>
+        <Text style={styles.sectionTitle}>Plan Management</Text>
+        <View style={styles.cardRow}>
+          <FeatureCard
+            icon={<FontAwesome5 name="briefcase" size={28} color="#0f0f0f" />}
+            title="Log Hours"
+            subtitle="Record your work hours"
+          />
+          <FeatureCard
+            icon={<Ionicons name="document-text" size={30} color="#0f0f0f" />}
+            title="Plan Documents"
+            subtitle="View your REAP 105 plan documents"
+          />
+          <FeatureCard
+            icon={<Ionicons name="bar-chart" size={30} color="0f0f0f" />}
+            title="Expense Analytics"
+            subtitle="View detailed expense reports"
+          />
+        </View>
+      </ScrollView>
+
+      {/* NAVBAR: Move this above ScrollView to make it a top nav \*/}
+      <Navbar />
+    </View>
   );
-}
+};
 
 function FeatureCard({ icon, title, subtitle, onPress }) {
   return (

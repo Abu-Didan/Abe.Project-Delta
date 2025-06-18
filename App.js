@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import ExpenseManagerScreen from './screens/ExpenseManagerScreen';
 import PlanDocumentsScreen from './screens/PlanDocumentsScreen';
+import ProfileScreen from './screens/ProfileScreen'; //Import ProfileScreen A.D (7.18.2025)
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Loading"
-        screenOptions = {{headerShown: false}}
+        screenOptions={{ headerShown: false }}
       >  
         <Stack.Screen
           name="Loading"
@@ -41,8 +42,12 @@ export default function App() {
           component={PlanDocumentsScreen}
           options={{ title: 'Plan Documents' }}
         />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ title: 'Your Profile' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-

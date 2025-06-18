@@ -1,36 +1,42 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Navbar from '../components/Navbar';
 
 const PlanDocumentsScreen = ({ navigation }) => {
     return (
-        <View style={styles.container}>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('AdoptionAgreement')}
-            >
-                <Text style={styles.buttonText}>View Adoption Agreement</Text>
-            </TouchableOpacity>
+        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+            <View style={styles.container}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('AdoptionAgreement')}
+                >
+                    <Text style={styles.buttonText}>View Adoption Agreement</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('BenefitSummary')}
-            >
-                <Text style={styles.buttonText}>View Summary of Benefits</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('BenefitSummary')}
+                >
+                    <Text style={styles.buttonText}>View Summary of Benefits</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('PlanDocument')}
-            >
-                <Text style={styles.buttonText}>View Plan Document</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('PlanDocument')}
+                >
+                    <Text style={styles.buttonText}>View Plan Document</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-                style={[styles.button, { backgroundColor: "#FF3B30" }]}
-                onPress={() => navigation.goBack()}
-            >
-                <Text style={styles.buttonText}>Back to Home</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#FF3B30" }]}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Text style={styles.buttonText}>Back to Home</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* NAVBAR: To move it to the top, place <Navbar /> above the container */}
+            <Navbar />
         </View>
     );
 };

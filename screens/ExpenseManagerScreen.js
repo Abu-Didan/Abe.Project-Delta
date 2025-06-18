@@ -1,52 +1,57 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Navbar from '../components/Navbar';
 
 const PlanOverviewScreen = ({ route, navigation }) => {
   const role = route?.params?.role || 'Employee';
   const planYear = '2024';
 
-  // Mocked data
   const totalExpenses = 3200;
   const reimbursed = 2800;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Current {planYear} Report</Text>
+    <View style={{ flex: 1, justifyContent: 'space-between' }}>
+      <View style={styles.container}>
+        <Text style={styles.header}>Current {planYear} Report</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.label}>Role:</Text>
-        <Text style={styles.value}>{role}</Text>
+        <View style={styles.card}>
+          <Text style={styles.label}>Role:</Text>
+          <Text style={styles.value}>{role}</Text>
 
-        <Text style={styles.label}>Plan Year:</Text>
-        <Text style={styles.value}>{planYear}</Text>
+          <Text style={styles.label}>Plan Year:</Text>
+          <Text style={styles.value}>{planYear}</Text>
 
-        <Text style={styles.label}>Total Expenses Submitted:</Text>
-        <Text style={styles.value}>${totalExpenses.toFixed(2)}</Text>
+          <Text style={styles.label}>Total Expenses Submitted:</Text>
+          <Text style={styles.value}>${totalExpenses.toFixed(2)}</Text>
 
-        <Text style={styles.label}>Approved Reimbursements:</Text>
-        <Text style={styles.value}>${reimbursed.toFixed(2)}</Text>
+          <Text style={styles.label}>Approved Reimbursements:</Text>
+          <Text style={styles.value}>${reimbursed.toFixed(2)}</Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('SubmitExpense')}
+        >
+          <Text style={styles.buttonText}>Submit New Expense</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('EnteredExpenses')}
+        >
+          <Text style={styles.buttonText}>View Entered Expenses</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: '#FF3B30' }]}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.buttonText}>Back to Home</Text>
+        </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('SubmitExpense')}
-      >
-        <Text style={styles.buttonText}>Submit New Expense</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('EnteredExpenses')}
-      >
-        <Text style={styles.buttonText}>View Entered Expenses</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.button, { backgroundColor: '#FF3B30' }]}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.buttonText}>Back to Home</Text>
-      </TouchableOpacity>
+      {/* NAVBAR: You can move this above the container to shift it to the top */}
+      <Navbar />
     </View>
   );
 };

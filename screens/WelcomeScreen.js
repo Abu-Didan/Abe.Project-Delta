@@ -1,24 +1,30 @@
-import React from 'react';
+import React from 'react'; 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Navbar from '../components/Navbar';
 
 const WelcomeScreen = ({ navigation }) => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Welcome to Hella$avings</Text>
+        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Welcome to Hella$avings</Text>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('Login')}
-            >
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('Login')}
+                >
+                    <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('SignUp')}
-            >
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => navigation.navigate('SignUp')}
+                >
+                    <Text style={styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* NAVBAR: To move it to the top, place <Navbar /> before the container */}
+            <Navbar />
         </View>
     );
 };
