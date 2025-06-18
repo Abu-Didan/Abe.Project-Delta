@@ -14,7 +14,7 @@ const LoadingScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>Abes Master piece</Text>
-      <Text style={styles.subtitle}>Empowering the self-employed</Text>
+      <Text style={styles.subtitle}>Empowering the self employed</Text>
       <ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 30 }} />
     </View>
   );
