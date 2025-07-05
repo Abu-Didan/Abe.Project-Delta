@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Navbar from '../components/Navbar'; // ✅ Import the navbar
+import Navbar from '../components/Navbar';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -11,7 +11,7 @@ const ProfileScreen = () => {
       title: 'Personal Information',
       subtitle: 'Update your name, email, and contact information',
       icon: '👤',
-      route: 'PersonalInfoScreen',
+      route: 'EditPersonalInfo', 
     },
     {
       title: 'Business Information',
@@ -53,7 +53,6 @@ const ProfileScreen = () => {
         </View>
       </View>
 
-      {/* NAVBAR: Move this above container to pin it to the top instead */}
       <Navbar />
     </View>
   );
