@@ -8,15 +8,17 @@ import HomeScreen from './screens/HomeScreen';
 import ExpenseManagerScreen from './screens/ExpenseManagerScreen';
 import PlanDocumentsScreen from './screens/PlanDocumentsScreen';
 import ProfileScreen from './screens/ProfileScreen'; //Import ProfileScreen A.D (7.18.2025)
+import EditPersonalInfoScreen from './screens/EditPersonalInfoScreen'; //NEW
+import BusinessInfoScreen from './screens/BusinessInfoScreen'; //NEW
+import SpouseInfoScreen from './screens/SpouseInfoScreen'; //NEW
+import PlanDetailsScreen from './screens/PlanDetailsScreen'; //NEW
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Loading"
-        screenOptions={{ headerShown: false }}
-      >  
+      <Stack.Navigator initialRouteName="Loading" screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="Loading"
           component={LoadingScreen}
@@ -46,6 +48,26 @@ export default function App() {
           name="Profile"
           component={ProfileScreen}
           options={{ title: 'Your Profile' }}
+        />
+        <Stack.Screen
+          name="EditPersonalInfo"
+          component={EditPersonalInfoScreen}
+          options={{ title: 'Edit Personal Info' }}
+        />
+        <Stack.Screen
+          name="BusinessInfoScreen"
+          component={BusinessInfoScreen}
+          options={{ title: 'Business Info' }}
+        />
+        <Stack.Screen
+          name="SpouseInfoScreen"
+          component={SpouseInfoScreen}
+          options={{ title: 'Spouse Info' }}
+        />
+        <Stack.Screen
+          name="PlanDetailsScreen"
+          component={PlanDetailsScreen}
+          options={{ title: 'Plan Details' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
