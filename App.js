@@ -12,6 +12,7 @@ import EditPersonalInfoScreen from './screens/EditPersonalInfoScreen'; //NEW
 import BusinessInfoScreen from './screens/BusinessInfoScreen'; //NEW
 import SpouseInfoScreen from './screens/SpouseInfoScreen'; //NEW
 import PlanDetailsScreen from './screens/PlanDetailsScreen'; //NEW
+import LogHoursScreen from './screens/LogHoursScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ export default function App() {
           name="Login"
           component={LoginScreen}
           options={{ title: 'Login' }}
+        />
+        <Stack.Screen
+          name="LogHours"
+          component={LogHoursScreen}
+          options={{ title: 'Log Hours' }}
         />
         <Stack.Screen
           name="Home"

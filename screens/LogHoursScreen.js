@@ -64,17 +64,17 @@ const SummarySection = ({ title, data }) => (
 );
 
 const styles = StyleSheet.create({
-    sectionTitle: {
-        fontSize: 30,
-        color: '#fff',
-        fontWeight: '900',
-        marginBottom: 12,
-        marginTop: 40,
-        textAlign: 'center',
-        borderBottomWidth: 2,
-        borderBottomColor: 'gold',
-        paddingBottom: 6,
-        alignSelf: 'center',
+  sectionTitle: {
+      fontSize: 30,
+      color: '#fff',
+      fontWeight: '900',
+      marginBottom: 12,
+      marginTop: 40,
+      textAlign: 'center',
+      borderBottomWidth: 2,
+      borderBottomColor: 'gold',
+      paddingBottom: 6,
+      alignSelf: 'center',
   },
   container: {
     padding: 16,

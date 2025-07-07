@@ -31,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
             icon={<Ionicons name="list" size={32} color="#0f0f0f" />}
             title="All Expenses"
             subtitle="View and manage medical expenses"
+            onPress={() => navigation.navigate('ExpenseManager')}
           />
         </View>
 
@@ -40,11 +41,13 @@ const HomeScreen = ({ navigation }) => {
             icon={<FontAwesome5 name="briefcase" size={28} color="#0f0f0f" />}
             title="Log Hours"
             subtitle="Record your work hours"
+            onPress={() => navigation.navigate('LogHours')}
           />
           <FeatureCard
             icon={<Ionicons name="document-text" size={30} color="#0f0f0f" />}
             title="Plan Documents"
             subtitle="View your REAP 105 plan documents"
+            onPress={() => navigation.navigate('PlanDocuments')}
           />
           <FeatureCard
             icon={<Ionicons name="bar-chart" size={30} color="0f0f0f" />}
