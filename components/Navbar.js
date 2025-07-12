@@ -9,6 +9,12 @@ const Navbar = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const navigation = useNavigation();
 
+  // helper to close menu then navigate
+  const goTo = (route) => {
+    setShowProfileMenu(false);
+    navigation.navigate(route);
+  };
+
   return (
     <View style={styles.navbarContainer}>
       <View style={styles.navbar}>
@@ -23,16 +29,23 @@ const Navbar = () => {
           <Ionicons name="notifications-outline" size={24} color="#f5d97c" />
         </TouchableOpacity>
 
+        {/* quick Analytics icon */}
+        <TouchableOpacity onPress={() => navigation.navigate("ExpenseAnalytics")}>
+          <Ionicons name="bar-chart" size={24} color="#f5d97c" />
+        </TouchableOpacity>
+
+        {/* quick user icon → Profile overview */}
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
           <FontAwesome name="user" size={24} color="#f5d97c" />
         </TouchableOpacity>
 
+        {/* hamburger */}
         <TouchableOpacity onPress={() => setShowProfileMenu(true)}>
           <MaterialIcons name="menu" size={28} color="#f5d97c" />
         </TouchableOpacity>
       </View>
 
-      {/* Notification Modal */}
+      {/* ------ Notification Modal ------- */}
       <Modal visible={showNotifications} transparent animationType="fade">
         <TouchableOpacity style={styles.overlay} onPress={() => setShowNotifications(false)}>
           <View style={styles.dropdown}>
@@ -45,17 +58,37 @@ const Navbar = () => {
         </TouchableOpacity>
       </Modal>
 
-      {/* Profile Menu Modal (now triggered by the menu icon) */}
+      {/* ------ Profile Menu Modal ------- */}
       <Modal visible={showProfileMenu} transparent animationType="fade">
         <TouchableOpacity style={styles.overlay} onPress={() => setShowProfileMenu(false)}>
           <View style={styles.dropdownMenu}>
-            <Text style={styles.menuItem}>Home</Text>
-            <Text style={styles.menuItem}>Edit Profile</Text>
-            <Text style={styles.menuItem}>Expenses</Text>
-            <Text style={styles.menuItem}>Analytics</Text>
-            <Text style={styles.menuItem}>Employee Journal</Text>
-            <Text style={styles.menuItem}>Plan Documents</Text>
-            <Text style={styles.menuItem}>Logout</Text>
+            <TouchableOpacity onPress={() => goTo("Home")}>
+              <Text style={styles.menuItem}>Home</Text>
+            </TouchableOpacity>
+
+            {/* now definitely goes to Profile screen */}
+            <TouchableOpacity onPress={() => goTo("Profile")}>
+              <Text style={styles.menuItem}>Edit Profile</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => goTo("ExpenseAnalytics")}>
+              <Text style={styles.menuItem}>Analytics</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => goTo("ExpenseManager")}>
+              <Text style={styles.menuItem}>Expenses</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => goTo("LogHours")}>
+              <Text style={styles.menuItem}>Employee Journal</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => goTo("PlanDocuments")}>
+              <Text style={styles.menuItem}>Plan Documents</Text>
+            </TouchableOpacity>
+
+            {/* placeholder logout */}
+            <Text style={[styles.menuItem, { borderBottomWidth: 0 }]}>Logout</Text>
           </View>
         </TouchableOpacity>
       </Modal>

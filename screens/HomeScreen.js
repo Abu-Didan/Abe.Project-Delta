@@ -12,11 +12,12 @@ import Navbar from '../components/Navbar';
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between' }}>
-      <ScrollView contentContainerStyle={{
-        flexGrow: 1,
-        justifyContent: 'center',
-        padding: 16,
-      }}
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          padding: 16,
+        }}
         style={{ backgroundColor: '#0f0f0f' }}
       >
         <Text style={styles.sectionTitle}>Medical Expenses</Text>
@@ -50,14 +51,15 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('PlanDocuments')}
           />
           <FeatureCard
-            icon={<Ionicons name="bar-chart" size={30} color="0f0f0f" />}
+            icon={<Ionicons name="bar-chart" size={30} color="#0f0f0f" />}
             title="Expense Analytics"
             subtitle="View detailed expense reports"
+            onPress={() => navigation.navigate('ExpenseAnalytics')}
           />
         </View>
       </ScrollView>
 
-      {/* NAVBAR: Move this above ScrollView to make it a top nav \*/}
+      {/* Bottom navigation bar */}
       <Navbar />
     </View>
   );
