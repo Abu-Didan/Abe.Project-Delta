@@ -13,7 +13,6 @@ import {
   Feather,
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
-import Navbar from '../components/Navbar';
 
 const PlanDocumentsScreen = ({ navigation }) => {
   return (
@@ -68,7 +67,6 @@ const PlanDocumentsScreen = ({ navigation }) => {
         </View>
       </ScrollView>
 
-      <Navbar />
     </View>
   );
 };

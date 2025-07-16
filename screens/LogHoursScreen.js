@@ -5,7 +5,6 @@ import {
 import {
   Feather, FontAwesome5, MaterialCommunityIcons
 } from '@expo/vector-icons';
-import Navbar from '../components/Navbar';
 
 const LogHoursScreen = () => {
   return (
@@ -33,7 +32,6 @@ const LogHoursScreen = () => {
         ]} />
       </ScrollView>
 
-      <Navbar />
     </View>
   );
 };

@@ -2,34 +2,35 @@
  * Root navigation:
  * <AuthProvider>  ──>  decide AuthStack ⬄ MainStack
  */
+// App.js  — full, cleaned version
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-/* Auth wiring */
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
-/* Auth screens */
+/* Auth branch */
 import LoadingScreen from './screens/LoadingScreen';
 import LoginScreen   from './screens/LoginScreen';
 import SignupScreen  from './screens/SignupScreen';
 
-/* Main screens */
+/* Main branch */
 import HomeScreen             from './screens/HomeScreen';
 import ExpenseManagerScreen   from './screens/ExpenseManagerScreen';
 import ExpenseAnalyticsScreen from './screens/ExpenseAnalyticsScreen';
 import PlanDocumentsScreen    from './screens/PlanDocumentsScreen';
+import LogHoursScreen         from './screens/LogHoursScreen';
 import ProfileScreen          from './screens/ProfileScreen';
+
 import EditPersonalInfoScreen from './screens/EditPersonalInfoScreen';
+import BusinessListScreen     from './screens/BusinessListScreen';
 import BusinessInfoScreen     from './screens/BusinessInfoScreen';
 import SpouseInfoScreen       from './screens/SpouseInfoScreen';
 import PlanDetailsScreen      from './screens/PlanDetailsScreen';
-import LogHoursScreen         from './screens/LogHoursScreen';
 
-/* Shared navbar */
 import Navbar from './components/Navbar';
 
-/* ---------- Layout HOC ---------- */
+/* ---------- layout HOC ---------- */
 function Layout({ children }) {
   return (
     <>
@@ -60,26 +61,29 @@ const MainStackNav = createNativeStackNavigator();
 function MainStack() {
   return (
     <MainStackNav.Navigator screenOptions={{ headerShown: false }}>
-      <MainStackNav.Screen name="Home"              component={withNavbar(HomeScreen)} />
-      <MainStackNav.Screen name="ExpenseManager"    component={withNavbar(ExpenseManagerScreen)} />
-      <MainStackNav.Screen name="ExpenseAnalytics"  component={withNavbar(ExpenseAnalyticsScreen)} />
-      <MainStackNav.Screen name="PlanDocuments"     component={withNavbar(PlanDocumentsScreen)} />
-      <MainStackNav.Screen name="LogHours"          component={withNavbar(LogHoursScreen)} />
-      <MainStackNav.Screen name="Profile"           component={withNavbar(ProfileScreen)} />
-      <MainStackNav.Screen name="EditPersonalInfo"  component={withNavbar(EditPersonalInfoScreen)} />
-      <MainStackNav.Screen name="BusinessInfo"      component={withNavbar(BusinessInfoScreen)} />
-      <MainStackNav.Screen name="SpouseInfo"        component={withNavbar(SpouseInfoScreen)} />
-      <MainStackNav.Screen name="PlanDetails"       component={withNavbar(PlanDetailsScreen)} />
+      {/* core screens */}
+      <MainStackNav.Screen name="Home"             component={withNavbar(HomeScreen)} />
+      <MainStackNav.Screen name="ExpenseManager"   component={withNavbar(ExpenseManagerScreen)} />
+      <MainStackNav.Screen name="ExpenseAnalytics" component={withNavbar(ExpenseAnalyticsScreen)} />
+      <MainStackNav.Screen name="PlanDocuments"    component={withNavbar(PlanDocumentsScreen)} />
+      <MainStackNav.Screen name="LogHours"         component={withNavbar(LogHoursScreen)} />
+      <MainStackNav.Screen name="Profile"          component={withNavbar(ProfileScreen)} />
+
+      {/* profile subtree */}
+      <MainStackNav.Screen name="EditPersonalInfo" component={withNavbar(EditPersonalInfoScreen)} />
+      <MainStackNav.Screen name="BusinessList"     component={withNavbar(BusinessListScreen)} />
+      <MainStackNav.Screen name="BusinessInfo"     component={withNavbar(BusinessInfoScreen)} />
+      <MainStackNav.Screen name="SpouseInfo"       component={withNavbar(SpouseInfoScreen)} />
+      <MainStackNav.Screen name="PlanDetails"      component={withNavbar(PlanDetailsScreen)} />
     </MainStackNav.Navigator>
   );
 }
 
-/* ---------- Root component ---------- */
+/* ---------- Root decider ---------- */
 function RootNavigator() {
   const { user, loading } = useContext(AuthContext);
-
-  if (loading) return <LoadingScreen />;        // waiting for Firebase to restore session
-  return user ? <MainStack /> : <AuthStack />;  // switch stacks based on auth
+  if (loading) return <LoadingScreen />;
+  return user ? <MainStack /> : <AuthStack />;
 }
 
 export default function App() {
@@ -91,3 +95,4 @@ export default function App() {
     </AuthProvider>
   );
 }
+

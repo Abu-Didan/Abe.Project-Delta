@@ -1,36 +1,38 @@
 // services/firebase.js
-// -------------------------------------------------------------
-// Centralised Firebase bootstrap for your Expo (managed) app.
-// -------------------------------------------------------------
-import { getApps, initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import {
+  getAuth,
   initializeAuth,
   getReactNativePersistence,
-} from 'firebase/auth';                          // ✅ use core path, not /react-native
-import { getFirestore } from 'firebase/firestore';
+} from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  initializeFirestore,
+  CACHE_SIZE_UNLIMITED,
+} from 'firebase/firestore';
 
-// ⚠️ All values come from your .env file.
+// ——————— Firebase config ———————
+// (keep your existing .env or hard-coded keys here)
 const firebaseConfig = {
-  apiKey:            process.env.EXPO_PUBLIC_FB_API_KEY,
-  authDomain:        process.env.EXPO_PUBLIC_FB_AUTH_DOMAIN,
-  projectId:         process.env.EXPO_PUBLIC_FB_PROJECT_ID,
-  storageBucket:     process.env.EXPO_PUBLIC_FB_STORAGE_BUCKET,
-  messagingSenderId: process.env.EXPO_PUBLIC_FB_MESSAGING_SENDER_ID,
-  appId:             process.env.EXPO_PUBLIC_FB_APP_ID,
+  apiKey:             process.env.EXPO_PUBLIC_FB_API_KEY,
+  authDomain:         process.env.EXPO_PUBLIC_FB_AUTH_DOMAIN,
+  projectId:          process.env.EXPO_PUBLIC_FB_PROJECT_ID,
+  storageBucket:      process.env.EXPO_PUBLIC_FB_STORAGE_BUCKET,
+  messagingSenderId:  process.env.EXPO_PUBLIC_FB_MESSAGING_SENDER_ID,
+  appId:              process.env.EXPO_PUBLIC_FB_APP_ID,
 };
 
-// Re-use the app on hot-reload
+// ——————— Initialize (guard against hot-reload) ———————
 const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 
-// Auth with persistent session (AsyncStorage works on iOS & Android)
+// Auth with React-Native persistence
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
 
-// Firestore for user profiles, expenses, etc.
-export const db = getFirestore(app);
-
-// (Uncomment if you need Storage later)
-// import { getStorage } from 'firebase/storage';
-// export const storage = getStorage(app);
+// Firestore with long-polling fallback
+export const db = initializeFirestore(app, {
+  cacheSizeBytes: CACHE_SIZE_UNLIMITED,
+  experimentalForceLongPolling: true, // <— key flag
+  useFetchStreams: false,             // Expo iOS needs this
+});

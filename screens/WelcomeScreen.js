@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Navbar from '../components/Navbar';
+
 
 const WelcomeScreen = ({ navigation }) => {
     return (
@@ -23,8 +23,6 @@ const WelcomeScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            {/* NAVBAR: To move it to the top, place <Navbar /> before the container */}
-            <Navbar />
         </View>
     );
 };

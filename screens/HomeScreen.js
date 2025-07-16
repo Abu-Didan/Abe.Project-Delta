@@ -10,7 +10,6 @@ import { Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '../services/firebase';   // ← NEW
-import Navbar from '../components/Navbar';
 
 const HomeScreen = ({ navigation }) => {
   /* --- ONE-OFF FIRESTORE TEST ------------------------------------------ */
@@ -82,7 +81,6 @@ const HomeScreen = ({ navigation }) => {
       </ScrollView>
 
       {/* Bottom navigation bar */}
-      <Navbar />
     </View>
   );
 };

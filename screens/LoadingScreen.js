@@ -1,19 +1,18 @@
+// screens/LoadingScreen.js
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 const LoadingScreen = ({ navigation }) => {
   useEffect(() => {
-    // Simulate loading delay (e.g. checking token)
+    if (!navigation) return;              // <— guard for AuthContext use
     const timer = setTimeout(() => {
       navigation.replace('Login');
-    }, 2000); // 2-second delay
-
+    }, 2000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
-  
       <Text style={styles.subtitle}>Empowering the self-employed</Text>
       <ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 30 }} />
     </View>
@@ -22,7 +21,6 @@ const LoadingScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' },
-  logo: { fontSize: 32, fontWeight: 'bold', color: '#007AFF' },
   subtitle: { fontSize: 16, marginTop: 10, color: '#555' },
 });
 

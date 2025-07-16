@@ -1,7 +1,7 @@
+// screens/ProfileScreen.js
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Navbar from '../components/Navbar';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -11,37 +11,40 @@ const ProfileScreen = () => {
       title: 'Personal Information',
       subtitle: 'Update your name, email, and contact information',
       icon: '👤',
-      route: 'EditPersonalInfo', 
+      route: 'EditPersonalInfo',
     },
     {
       title: 'Business Information',
-      subtitle: 'Manage your business details and settings',
+      subtitle: 'Manage multiple businesses or add a new one',
       icon: '🏢',
-      route: 'BusinessInfoScreen',
+      route: 'BusinessList',          // ★ now opens list
     },
     {
       title: 'Spouse Information',
       subtitle: 'Update spouse details and job information',
       icon: '👨‍👩‍👧‍👦',
-      route: 'SpouseInfoScreen',
+      route: 'SpouseInfo',
     },
     {
       title: 'Plan Details',
       subtitle: 'Configure your medical reimbursement plan',
       icon: '📋',
-      route: 'PlanDetailsScreen',
+      route: 'PlanDetails',
     },
   ];
 
   return (
-    <View style={{ flex: 1, justifyContent: 'space-between' }}>
+    <View style={{ flex: 1 }}>
       <View style={styles.container}>
         <Text style={styles.header}>Edit Profile</Text>
-        <Text style={styles.subheader}>Update your personal information, business details, and plan settings</Text>
+        <Text style={styles.subheader}>
+          Update your personal information, business details, and plan settings
+        </Text>
+
         <View style={styles.tileContainer}>
-          {tiles.map((tile, idx) => (
+          {tiles.map((tile) => (
             <TouchableOpacity
-              key={idx}
+              key={tile.title}
               style={styles.tile}
               onPress={() => navigation.navigate(tile.route)}
             >
@@ -52,8 +55,6 @@ const ProfileScreen = () => {
           ))}
         </View>
       </View>
-
-      <Navbar />
     </View>
   );
 };
@@ -66,23 +67,9 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 20,
   },
-  header: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  subheader: {
-    fontSize: 14,
-    color: '#ccc',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  tileContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
+  header: { fontSize: 28, fontWeight: 'bold', color: '#fff' },
+  subheader: { fontSize: 14, color: '#ccc', textAlign: 'center', marginBottom: 30 },
+  tileContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', width: '100%' },
   tile: {
     width: '45%',
     backgroundColor: '#222',
@@ -95,22 +82,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
   },
-  icon: {
-    fontSize: 36,
-    marginBottom: 10,
-  },
-  tileTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
-  },
-  tileSubtitle: {
-    fontSize: 12,
-    color: '#aaa',
-    textAlign: 'center',
-    marginTop: 6,
-  },
+  icon: { fontSize: 36, marginBottom: 10 },
+  tileTitle: { fontSize: 16, fontWeight: 'bold', color: '#fff', textAlign: 'center' },
+  tileSubtitle: { fontSize: 12, color: '#aaa', textAlign: 'center', marginTop: 6 },
 });
 
 export default ProfileScreen;
