@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,30 @@ import {
   ScrollView,
 } from 'react-native';
 import { Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from '../services/firebase';   // ← NEW
 import Navbar from '../components/Navbar';
 
 const HomeScreen = ({ navigation }) => {
+  /* --- ONE-OFF FIRESTORE TEST ------------------------------------------ */
+  useEffect(() => {
+    const pushTestDoc = async () => {
+      try {
+        if (!auth.currentUser) return; // should always be signed in here
+        await addDoc(collection(db, 'sanityChecks'), {
+          uid: auth.currentUser.uid,
+          checkedAt: serverTimestamp(),
+        });
+        console.log('✅ Firestore sanity doc added');
+      } catch (e) {
+        console.log('❌ Firestore test failed:', e.message);
+      }
+    };
+    pushTestDoc();
+  }, []);
+  /* --------------------------------------------------------------------- */
+
   return (
     <View style={{ flex: 1, justifyContent: 'space-between' }}>
       <ScrollView
@@ -20,6 +41,7 @@ const HomeScreen = ({ navigation }) => {
         }}
         style={{ backgroundColor: '#0f0f0f' }}
       >
+        {/* … (your original JSX unchanged) … */}
         <Text style={styles.sectionTitle}>Medical Expenses</Text>
         <View style={styles.cardRow}>
           <FeatureCard
