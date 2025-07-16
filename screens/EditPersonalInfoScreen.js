@@ -1,14 +1,49 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+// screens/EditPersonalInfoScreen.js
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
+import { fetchProfile, saveProfile } from '../services/profileService';
 
 const EditPersonalInfoScreen = ({ navigation }) => {
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('john@example.com');
-  const [phone, setPhone] = useState('123-456-7890');
+  const [name,  setName]  = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [saving, setSaving] = useState(false);
 
+  /* load existing profile once */
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const snap = await fetchProfile();
+        if (snap.exists()) {
+          const d = snap.data();
+          setName(d.name  || '');
+          setEmail(d.email || '');
+          setPhone(d.phone || '');
+        }
+      } catch (e) {
+        console.log('❌ fetchProfile failed:', e.message);
+      }
+    };
+    load();
+  }, []);
+
+  /* fire-and-forget save */
   const handleSave = () => {
-    // Save logic comes later
-    navigation.goBack();
+    setSaving(true);
+
+    saveProfile({ name, email, phone })
+      .then(() => console.log('✅ profile saved'))
+      .catch((e) => console.log('❌ saveProfile failed:', e.message))
+      .finally(() => setSaving(false));
+
+    navigation.goBack();          // return right away
   };
 
   return (
@@ -28,6 +63,8 @@ const EditPersonalInfoScreen = ({ navigation }) => {
         onChangeText={setEmail}
         placeholder="Email"
         placeholderTextColor="#888"
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -35,11 +72,16 @@ const EditPersonalInfoScreen = ({ navigation }) => {
         onChangeText={setPhone}
         placeholder="Phone"
         placeholderTextColor="#888"
+        keyboardType="phone-pad"
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSave}>
-        <Text style={styles.buttonText}>Save</Text>
-      </TouchableOpacity>
+      {saving ? (
+        <ActivityIndicator style={{ marginTop: 20 }} color="#FFD700" />
+      ) : (
+        <TouchableOpacity style={styles.button} onPress={handleSave}>
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
