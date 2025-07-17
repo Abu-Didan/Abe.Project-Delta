@@ -34,6 +34,26 @@ export const updateBusiness = (bizId, data) =>
     { merge: true }
   );
 
+/* ─────────────── hours (collection) ─────────────── */
+
+const hoursLoggedCol = () => collection(db, 'users', uid(), 'hoursLogged');
+
+export const listHoursLogged = () =>
+  query(hoursLoggedCol(), orderBy('createdAt', 'desc'));
+
+export const addHourLog = (data) =>
+  addDoc(hoursLoggedCol(), { ...data, createdAt: serverTimestamp() });
+
+export const getHoursLog = (logId) =>
+  getDoc(doc(db, 'users', uid(), 'hoursLogged', logId));
+
+export const updateHourLog = (logId, data) =>
+  setDoc(
+    doc(db, 'users', uid(), 'hoursLogged', logId),
+    { ...data, updatedAt: serverTimestamp() },
+    { merge: true }
+  );
+
 /* ─────────────── single-doc branches ─────────────── */
 
 const profileDoc      = () => doc(db, 'users', uid(), 'profile',      'info');
