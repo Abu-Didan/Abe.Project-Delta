@@ -8,24 +8,102 @@ import RNPickerSelect from 'react-native-picker-select';
 import {
   Feather, FontAwesome5, MaterialCommunityIcons, MaterialIcons
 } from '@expo/vector-icons';
-import { addHourLog } from '../services/profileService';
-import { listHoursLogged } from '../services/profileService';
+import { addHourLog, listHoursLogged, addPaymentLog, listPaymentsLogged } from '../services/profileService';
 import { onSnapshot } from 'firebase/firestore';
 
 const LogHoursScreen = () => {
+  const [saving, setSaving] = useState(false);
 
   const [hoursModalVisible, setHoursModalVisible] = useState(false);
-  const [payModalVisible, setPayModalVisible] = useState(false);
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [inputHours, setInputHours] = useState('');
-  const [saving, setSaving] = useState(false);
   const [hourSummary, setHourSummary] = useState({
     today: 0,
     week: 0,
     month: 0,
     year: 0,
   });
+
+  const [payModalVisible, setPayModalVisible] = useState(false);
+  const [payDate, setPayDate] = useState(new Date());
+  const [showPayDatePicker, setShowPayDatePicker] = useState(false);
+  const [inputPay, setInputPay] = useState('');
+  const [paySummary, setPaySummary] = useState({
+    month: 0,
+    quarter: 0,
+    yearToDate: 0,
+    totalPayments: 0,
+  });
+
+  /** Save and cancel methods for payment modal */
+  const handleSavePay = async () => {
+    const amount = parseFloat(inputPay);
+    if (isNaN(amount) || amount <= 0) {
+      alert('Enter a valid payment amount.');
+      return;
+    }
+
+    if (saving) return;
+    setSaving(true);
+
+    try {
+      await addPaymentLog({
+        date: payDate,
+        amountPaid: amount,
+      });
+
+      setInputPay('');
+      setPayModalVisible(false);
+    } catch (e) {
+      console.error('Error saving pay log:', e);
+      alert('Failed to save pay entry.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+
+  const handleCancelPay = () => {
+    setPayModalVisible(false);
+  };
+
+  /** Methods to update the W-2 wage report summary, based on date and number of payments */
+  useEffect(() => {
+    const unsubscribe = onSnapshot(listPaymentsLogged(), (snapshot) => {
+      const logs = snapshot.docs.map(doc => doc.data());
+      updatePaySummary(logs);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const updatePaySummary = (logs) => {
+    const now = new Date();
+    let month = 0, quarter = 0, yearToDate = 0, totalPayments = 0;
+
+    logs.forEach(log => {
+      const logDate = log.date?.toDate?.();
+      if (!logDate) return;
+
+      const amount = parseFloat(log.amountPaid) || 0;
+      totalPayments += 1;
+      if (isSameMonth(logDate, now)) month += amount;
+      if (isSameQuarter(logDate, now)) quarter += amount;
+      if (isSameYear(logDate, now)) yearToDate += amount;
+    });
+
+    setPaySummary({ month, quarter, yearToDate, totalPayments });
+  };
+
+  const isSameQuarter = (d1, d2) => {
+    return (
+      d1.getFullYear() === d2.getFullYear() &&
+      Math.floor(d1.getMonth() / 3) === Math.floor(d2.getMonth() / 3)
+    );
+  };
+
+  /** ------------------------------------------------------------------- */
 
   /** Methods to update the hour report summary, based on sorting by date */
   useEffect(() => {
@@ -78,13 +156,16 @@ const LogHoursScreen = () => {
 
   /** Save and cancel methods for record hours modal */
   const handleSave = async () => {
-    try {
-      const hours = parseFloat(inputHours);
-      if (isNaN(hours) || hours <= 0) {
-        alert('Please enter a valid number of hours.');
-        return;
-      }
+    const hours = parseFloat(inputHours);
+    if (isNaN(hours) || hours <= 0) {
+      alert('Please enter a valid number of hours.');
+      return;
+    }
 
+    if (saving) return;
+    setSaving(true);
+
+    try {
       await addHourLog({
         date: date,
         hoursWorked: hours,
@@ -93,10 +174,13 @@ const LogHoursScreen = () => {
       setInputHours('');
       setHoursModalVisible(false);
     } catch (error) {
-        console.error('Error saving hour log:', error);
-        alert('Failed to save hour entry.');
+      console.error('Error saving hour log:', error);
+      alert('Failed to save hour entry.');
+    } finally {
+      setSaving(false);
     }
   };
+
 
   const handleCancel = () => {
     setHoursModalVisible(false);
@@ -164,6 +248,49 @@ const LogHoursScreen = () => {
           </View>
         </Modal>
 
+        <Modal isVisible={payModalVisible}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Record Payment</Text>
+
+            {/* Date Picker */}
+            <TouchableOpacity onPress={() => setShowPayDatePicker(true)} style={styles.inputField}>
+              <Text style={styles.inputText}>{payDate.toLocaleDateString()}</Text>
+              <MaterialIcons name="calendar-today" size={20} color="#ccc" />
+            </TouchableOpacity>
+            {showPayDatePicker && (
+              <DateTimePicker
+                value={payDate}
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                  setShowPayDatePicker(false);
+                  if (selectedDate) setPayDate(selectedDate);
+                }}
+              />
+            )}
+
+            {/* Hours Input */}
+            <TextInput
+              style={styles.inputBox}
+              placeholder="Payment Amount"
+              placeholderTextColor="#aaa"
+              keyboardType="numeric"
+              value={inputPay}
+              onChangeText={setInputPay}
+            />
+
+            {/* Buttons */}
+            <View style={styles.modalButtons}>
+              <TouchableOpacity onPress={() => handleCancelPay()} style={styles.cancelButton}>
+                <Text style={styles.cancelText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { handleSavePay() }} style={styles.saveButton}>
+                <Text style={styles.saveText}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
         <SummarySection title="Hours Report Summary" data={[
           { label: 'Today', value: hourSummary.today.toFixed(1), unit: 'hours' },
           { label: 'This Week', value: hourSummary.week.toFixed(1), unit: 'hours' },
@@ -172,10 +299,10 @@ const LogHoursScreen = () => {
         ]} />
 
         <SummarySection title="W-2 Wage Report Summary" data={[
-          { label: 'This Month', value: '$0', unit: 'paid' },
-          { label: 'This Quarter', value: '$0', unit: 'paid' },
-          { label: 'Year to Date', value: '$0', unit: 'paid' },
-          { label: 'Total Payments', value: '0', unit: 'payments' },
+          { label: 'This Month', value: `$${paySummary.month.toFixed(2)}`, unit: 'paid' },
+          { label: 'This Quarter', value: `$${paySummary.quarter.toFixed(2)}`, unit: 'paid' },
+          { label: 'Year to Date', value: `$${paySummary.yearToDate.toFixed(2)}`, unit: 'paid' },
+          { label: 'Total Payments', value: `${paySummary.totalPayments.toFixed(0)}`, unit: 'payments' },
         ]} />
       </ScrollView>
 
