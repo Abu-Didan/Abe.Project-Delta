@@ -54,6 +54,26 @@ export const updateHourLog = (logId, data) =>
     { merge: true }
   );
 
+/* ─────────────── payments (collection) ─────────────── */
+
+const paymentsLoggedCol = () => collection(db, 'users', uid(), 'paymentsLogged');
+
+export const listPaymentsLogged = () =>
+    query(paymentsLoggedCol(), orderBy('createdAt', 'desc'));
+
+export const addPaymentLog = (data) =>
+    addDoc(paymentsLoggedCol(), { ...data, createdAt: serverTimestamp() });
+
+export const getPaymentsLog = (payId) =>
+  getDoc(doc(db, 'users', uid(), 'paymentsLogged', payId));
+
+export const updatePaymentLog = (payId, data) =>
+  setDoc(
+    doc(db, 'users', uid(), 'paymentsLogged', logId),
+    { ...data, updatedAt: serverTimestamp() },
+    { merge: true }
+  );
+
 /* ─────────────── single-doc branches ─────────────── */
 
 const profileDoc      = () => doc(db, 'users', uid(), 'profile',      'info');
